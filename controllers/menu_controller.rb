@@ -13,7 +13,8 @@ class MenuController
         puts "2 - Create an entry"
         puts "3 - Search for an entry"
         puts "4 - Import entries from a CSV"
-        puts "5 - Exit"
+        puts "5 - Delete ALL entries"
+        puts "6 - Exit"
         print "Enter your selection:"
 
         selection = gets.to_i
@@ -36,6 +37,10 @@ class MenuController
                 read_csv
                 main_menu
             when 5
+                system "clear"
+                nuke_entries
+                main_menu
+            when 6
                 puts "Good-bye!"
                 exit(0)
             else
@@ -103,6 +108,23 @@ class MenuController
         rescue => exception
             puts "#{file_name} is not a valid CSV file, please enter the name of a valid CSV file"
             read_csv
+        end
+    end
+
+    def nuke_entries
+        print "Are you sure you want to destroy all entries?(y/n)"
+        selection = gets.chomp
+
+        if selection == "y"
+            address_book.entries.clear
+            system "clear"
+            puts "All entries have been cleared"
+        elsif selection == "n"
+            system "clear"
+            puts "Address Book nuke delayed!"
+        else
+            system "clear"
+            puts "That is not a valid input"
         end
     end
 
